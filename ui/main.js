@@ -4,7 +4,7 @@ console.log('Loaded!');
 
 var element = document.getElementById('main-text');
 
-element.innerHTML='new One';
+//element.innerHTML='new One';
 
 //Move the image
 var img = document.getElementById('madi');
