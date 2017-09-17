@@ -21,7 +21,7 @@ button.onClick = function () {
 
     //Make the request
     request.open('GET','http://kamatpallavi.imad.hasura-app.io/counter', true);
-    request.send(NULL);
+    request.send(null);
 
 //Submit name
 
