@@ -87,6 +87,39 @@ app.post('/create-user', function (req, res) {
   });
 });
 
+app.post('/login', function (req, res) {
+    var username = req.body.username;
+    var password = req.body.password;
+    
+    pool.query('SELECT * FROM "user" WHERE username = $1', [username], function (err, result) {
+      if (err) {
+            res.status(500).send(err.toString());
+      } else {
+          if (result.res.length === 0) {
+              res.send(403).send('Username/Password is incorrect');
+          } else {
+              //MAtch the passwords
+              var dbString = results.rows[0].password;
+              var salt = dbString.split('$')[2];
+              var hashPassword = hash(password, salt); // Creating a hash based om the password submitted and the original salt
+              if (hashPassword === dbString) {
+                  //set the session
+                  //req.session.auth = {userId: result.rows[0].id};
+                  //set cookie with the session id
+                  // internally on the server side, it maps the session id to an object
+                  // {auth: {userid}}
+                  
+                  res.send ("Credentials are correct!");
+              } else {
+                  res.send (403).send("username/password is invalid");
+              
+              }
+          }
+      }
+  });
+});
+
+
 var pool = new Pool(config);
 app.get('/test-db', function (req, res) {
     // make a select request
